@@ -17,6 +17,7 @@ end
 
 #url /items/new GET
 def new
+	@item = Item.new
 end
 
 #url /items/1/edit GET
@@ -27,9 +28,19 @@ end
 def create
 	#@item = Item.create(name: params[:name], description: params[:description], price: 
 	#	params[:price], real: params[:real], weight: params[:weight])
-	@item = Item.create(item_params)		
-	p params
-	render text: "#{@item.id}: #{@item.name} #{@item.price} (#{!@item.new_record?})"
+	
+
+#	@item = Item.create(item_params)		
+	@item = Item.create(item_params)
+	if @item.errors.empty?
+		redirect_to item_path(@item)	
+	else
+		render "new"
+	end	
+#	p params
+#	render text: "#{@item.id}: #{@item.name} #{@item.price} (#{!@item.new_record?})"
+
+#	render text: params.inspect
 end
 
 #url /items/1 PUT
