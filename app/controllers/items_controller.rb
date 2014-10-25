@@ -22,6 +22,7 @@ end
 
 #url /items/1/edit GET
 def edit
+	@item = Item.find(params[:id])
 end
 
 #url /items POST
@@ -29,11 +30,9 @@ def create
 	#@item = Item.create(name: params[:name], description: params[:description], price: 
 	#	params[:price], real: params[:real], weight: params[:weight])
 	
-
-#	@item = Item.create(item_params)		
 	@item = Item.create(item_params)
 	if @item.errors.empty?
-		redirect_to item_path(@item)	
+		redirect_to item_path(@item)	#items/:id
 	else
 		render "new"
 	end	
@@ -45,6 +44,13 @@ end
 
 #url /items/1 PUT
 def update
+	@item = Item.find(params[:id])
+	@item.update_attributes(item_params)#item_params - хэш параметров из браузера
+	if @item.errors.empty?
+		redirect_to item_path(@item)	#items/:id
+	else
+		render "edit"
+	end	
 end
 
 #url /items/1 DELETE
