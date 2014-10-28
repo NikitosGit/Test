@@ -1,6 +1,23 @@
 <h1>Список товаров на складе:</h1>
-<% @items.each do |i|%>
+<% if @items.empty? %>
+	<b>Нет товаров на складе</b>
+<% else %>
+<table>
+	<tr>
+		<th>Item id</th>
+		<th>Name</th>
+		<th>Price</th>
+		<th></th>
+	</tr>
 
-	<p> <%=link_to i.name, item_path(i) %> </p>
+	<% @items.each do |i| %>
+	<tr>
+		<td><%= i.id %></td>
+		<td><%=link_to i.name, item_path(i) %></td>
+		<td><%= i.price %> руб.</td>
+		<td><%= link_to "удалить", item_path(i), method: :delete, data: {confirm: "Точно удалить?"} %></td>
+	</tr>
 
+	<% end %>
+</table>
 <% end %>
