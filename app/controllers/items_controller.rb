@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
 	
-	before_filter :find_item, only: [:show, :edit, :update, :destroy]
+	before_filter :find_item, only: [:show, :edit, :update, :destroy, :upvote]
 	before_filter :check_if_admin,  only: [:edit, :update, :new, :create, :destroy]
 
 	def index	
@@ -9,6 +9,11 @@ class ItemsController < ApplicationController
 							 #По умолчанию рендерится шаблон, совпадающий с названием метода т. е. index.html.erb
 		
 		#render text: @items.map {|i| "#{i.id} #{i.name}: #{i.price}"}.join("<br/>")
+	end
+
+	def expensive
+		@items = Item.where("price>499")
+		render "index"
 	end
 
 	#url /items/1 GET
@@ -61,6 +66,12 @@ class ItemsController < ApplicationController
 		redirect_to action: "index"
 	end
 
+	def upvote
+		@item.increment!(:votes_count)
+		redirect_to action: :index
+	end
+
+
 	private 
 		
 	def item_params
@@ -72,6 +83,6 @@ class ItemsController < ApplicationController
 	end
 
 	def check_if_admin
-		render text: "Access denied", status: 403 unless params[:admin]
+#		render text: "Access denied", status: 403 unless params[:admin]
 	end
 end

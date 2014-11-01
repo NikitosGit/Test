@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   #------------------Мои маршруты!!!!!!!!------------
   # match '/items', to: 'items#index', via: 'get'
   # get ':controller(/:action(/:id))'
-  resources :items
+  resources :items do
+      get :upvote, on: :member
+      get :expensive, on: :collection
+  end
   #---------------------------------------------
 
 
