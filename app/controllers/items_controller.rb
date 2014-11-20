@@ -11,10 +11,12 @@ class ItemsController < ApplicationController
 		#render text: @items.map {|i| "#{i.id} #{i.name}: #{i.price}"}.join("<br/>")
 	end
 
+
 	def expensive
 		@items = Item.where("price>499")
 		render "index"
 	end
+
 
 	#url /items/1 GET
 	def show
@@ -24,14 +26,17 @@ class ItemsController < ApplicationController
 		end
 	end
 
+
 	#url /items/new GET
 	def new
 		@item = Item.new
 	end
 
+
 	#url /items/1/edit GET
 	def edit
 	end
+
 
 	#url /items POST
 	def create
@@ -46,9 +51,9 @@ class ItemsController < ApplicationController
 		end	
 	#	p params
 	#	render text: "#{@item.id}: #{@item.name} #{@item.price} (#{!@item.new_record?})"
-
 	#	render text: params.inspect
 	end
+
 
 	#url /items/1 PUT
 	def update
@@ -60,11 +65,13 @@ class ItemsController < ApplicationController
 		end	
 	end
 
+
 	#url /items/1 DELETE
 	def destroy
 		@item.destroy
 		redirect_to action: "index"
 	end
+
 
 	def upvote
 		@item.increment!(:votes_count)
@@ -78,11 +85,15 @@ class ItemsController < ApplicationController
 		params.require(:item).permit(:name, :description, :price, :weight, :real)
 	end
 
+
 	def find_item
-		@item = Item.find(params[:id])
+		@item = Item.where(id: params[:id]).first
+		render_404 unless @item
 	end
+
 
 	def check_if_admin
 #		render text: "Access denied", status: 403 unless params[:admin]
+		render_403 unless params[:admin]
 	end
 end
