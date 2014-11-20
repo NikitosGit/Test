@@ -5,8 +5,9 @@ ruby '1.9.3'
 gem 'rails', '4.1.0'
 # Use sqlite3 as the database for Active Record
 group :development do
-gem 'sqlite3', '1.3.8'
+	gem 'sqlite3', '1.3.8'
 end
+gem 'carrierwave'
 # Use SCSS for stylesheets
 gem 'sass-rails', '4.0.1'
 # Use Uglifier as compressor for JavaScript assets
@@ -24,6 +25,11 @@ gem 'turbolinks','1.1.1'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
+
+group :test do
+	gem 'rspec-rails'
+	gem 'factory_girl'
+end	
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development

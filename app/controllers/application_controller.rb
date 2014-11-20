@@ -14,8 +14,7 @@ private
 	end
 	
 	def check_if_admin
-#		render text: "Access denied", status: 403 unless params[:admin]
-		render_403 unless params[:admin]
+#		render_403 unless params[:admin]
 	end
 	  
 end
